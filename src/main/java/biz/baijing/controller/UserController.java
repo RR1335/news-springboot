@@ -4,6 +4,7 @@ import biz.baijing.common.ErrorMessage;
 import biz.baijing.pojo.Result;
 import biz.baijing.pojo.User;
 import biz.baijing.service.UserService;
+import biz.baijing.utils.JwtUtil;
 import biz.baijing.utils.Md5Util;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
 
 @RestController
 @RequestMapping("/user")
@@ -56,9 +59,13 @@ public class UserController {
 
         // 用户名密码正确，登录成功
         if (loginUser.getPassword().equals(Md5Util.getMD5String(password))) {
+            // 获取登录成功的 Token
+            HashMap<String, Object> claims = new HashMap<>();
+            claims.put("id",loginUser.getId());
+            claims.put("username",loginUser.getUsername());
+            String token = JwtUtil.genToken(claims);
 
-
-            return Result.success("Token");
+            return Result.success(token);
         }
 
         // 密码错误

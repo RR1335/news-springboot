@@ -7,4 +7,5 @@ public class ErrorMessage {
     public static final String REGISTER_ERROR = "用户名已存在；请重新输入。";
     public static final String LOGIN_ERROR = "用户名错误或不存在，请重新输入。";
     public static final String LOGOIN_PASSWORD_ERROR = "密码错误，请重新输入。";
+    public static final String UNLOGIN = "未登录，请重新登录。";
 }
