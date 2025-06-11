@@ -1,4 +1,19 @@
 package biz.baijing.service;
 
+import biz.baijing.pojo.User;
+
 public interface UserService {
+    /**
+     * 查找用户根据用户名
+     * @param username
+     * @return
+     */
+    User findByUsername(String username);
+
+    /**
+     * 注册用户
+     * @param username
+     * @param password
+     */
+    void register(String username, String password);
 }
