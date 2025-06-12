@@ -3,6 +3,8 @@ package biz.baijing.service;
 import biz.baijing.pojo.Category;
 import jakarta.validation.constraints.Pattern;
 
+import java.util.List;
+
 public interface CategoryService {
 
     /**
@@ -10,4 +12,10 @@ public interface CategoryService {
      * @param category
      */
     void add(@Pattern(regexp = "^\\S{3,10}$") Category category);
+
+    /**
+     * 查询分类列表根据用户id
+     * @return
+     */
+    List<Category> listById();
 }

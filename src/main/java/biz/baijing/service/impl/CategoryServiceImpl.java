@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -35,5 +36,16 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
         categoryMapper.add(category);
+    }
+
+    /**
+     * 分类列表根据用户id
+     * @return
+     */
+    public List<Category> listById() {
+        Map<String,Object> map = ThreadLocalUtil.get();
+        Integer loginUserId = (Integer) map.get("id");
+
+        return categoryMapper.listById(loginUserId);
     }
 }

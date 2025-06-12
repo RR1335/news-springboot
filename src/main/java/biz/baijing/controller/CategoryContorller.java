@@ -8,10 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Validated
@@ -34,6 +33,18 @@ public class CategoryContorller {
         categoryService.add(category);
 
         return  Result.success();
+    }
+
+    /**
+     * 当前用户创建的所有分类
+     * @return
+     */
+    @GetMapping
+    public Result<List<Category>> listById() {
+
+        List<Category> list = categoryService.listById();
+
+        return Result.success(list);
     }
 
 }
