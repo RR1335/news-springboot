@@ -31,8 +31,11 @@ public class Category {
     private LocalDateTime updateTime;//更新时间
 
 
+    // 无分组，默认属于 default
+    // 分组继承， A extends B
+
     // 定义 groups 分组
-    public interface Add {
+    public interface Add{
 
     }
 
