@@ -9,6 +9,7 @@ import biz.baijing.utils.Md5Util;
 import biz.baijing.utils.ThreadLocalUtil;
 import jakarta.validation.constraints.Pattern;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -99,7 +100,7 @@ public class UserController {
      * @return
      */
     @PutMapping("/update")
-    public Result update(@RequestBody @Validated User user) {
+    public Result update(@RequestBody @Validated(Update.class) User user) {
 
         userService.update(user);
 
