@@ -16,4 +16,10 @@ public interface UserService {
      * @param password
      */
     void register(String username, String password);
+
+    /**
+     * 更新用户信息
+     * @param user
+     */
+    void update(User user);
 }

@@ -4,6 +4,7 @@ import biz.baijing.pojo.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface UserMapper {
@@ -26,4 +27,11 @@ public interface UserMapper {
     @Insert("insert into user(username, password, nickname, create_time, update_time) " +
             "values (#{username},#{password},#{username},now(),now())")
     void add(String username, String password);
+
+    /**
+     * 更新用户信息
+     * @param user
+     */
+    @Update("update user  set nickname = #{nickname},email = #{email}, update_time = #{updateTime} where id = #{id}")
+    void update(User user);
 }

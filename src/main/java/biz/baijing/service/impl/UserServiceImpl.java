@@ -6,6 +6,8 @@ import biz.baijing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -30,5 +32,14 @@ public class UserServiceImpl implements UserService {
      */
     public void register(String username, String password) {
         userMapper.add(username,password);
+    }
+
+    /**
+     * 更新用户信息
+     * @param user
+     */
+    public void update(User user) {
+        user.setUpdateTime(LocalDateTime.now());
+        userMapper.update(user);
     }
 }
