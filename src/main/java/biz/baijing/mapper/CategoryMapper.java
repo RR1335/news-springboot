@@ -25,4 +25,13 @@ public interface CategoryMapper {
      */
     @Select("select * from category where create_user = #{userId}")
     List<Category> listById(Integer userId);
+
+    /**
+     * 根据Id查询详情，登录用户创建的
+     * @param id
+     * @param userId
+     * @return
+     */
+    @Select("select * from category where create_user = #{userId} && id = #{id}")
+    Category findById(Integer id, Integer userId);
 }

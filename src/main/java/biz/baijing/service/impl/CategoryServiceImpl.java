@@ -48,4 +48,17 @@ public class CategoryServiceImpl implements CategoryService {
 
         return categoryMapper.listById(loginUserId);
     }
+
+    /**
+     * 查询分类详情根据Id
+     * @param categoryId
+     * @return
+     */
+    public Category findById(Integer categoryId) {
+        Map<String,Object> map = ThreadLocalUtil.get();
+        Integer loginUserId = (Integer) map.get("id");
+
+        return categoryMapper.findById(categoryId,loginUserId);
+
+    }
 }

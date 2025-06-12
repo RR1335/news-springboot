@@ -18,4 +18,11 @@ public interface CategoryService {
      * @return
      */
     List<Category> listById();
+
+    /**
+     * 根据Id查询分类详情
+     * @param id
+     * @return
+     */
+    Category findById(Integer id);
 }

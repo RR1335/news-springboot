@@ -47,4 +47,29 @@ public class CategoryContorller {
         return Result.success(list);
     }
 
+    /**
+     * 查询分类详情根据Id,登录用户创建的
+     * @param id
+     * @return
+     */
+    @GetMapping("/detail")
+    public Result<Category> detail(Integer id) {
+        Category category = categoryService.findById(id);
+
+        return Result.success(category);
+    }
+
+    /**
+     * 更新文章分类
+     * @param category
+     * @return
+     */
+    @PutMapping
+    public Result update(@RequestBody @Validated Category category) {
+
+        categoryService.update(category);
+        
+        return Result.success();
+    }
+
 }
