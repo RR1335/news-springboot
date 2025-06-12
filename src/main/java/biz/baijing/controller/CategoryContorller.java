@@ -27,7 +27,7 @@ public class CategoryContorller {
      * @return
      */
     @PostMapping
-    public Result add(@RequestBody @Validated Category category) {
+    public Result add(@RequestBody @Validated(Category.Add.class) Category category) {
         log.info("新增分类：{}", category);
 
         categoryService.add(category);
@@ -65,10 +65,11 @@ public class CategoryContorller {
      * @return
      */
     @PutMapping
-    public Result update(@RequestBody @Validated Category category) {
+    public Result update(@RequestBody @Validated(Category.Update.class) Category category) {
+        log.info("分类详情 {}", category);
 
         categoryService.update(category);
-        
+
         return Result.success();
     }
 

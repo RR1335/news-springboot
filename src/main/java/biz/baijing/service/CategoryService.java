@@ -25,4 +25,10 @@ public interface CategoryService {
      * @return
      */
     Category findById(Integer id);
+
+    /**
+     * 更新分类
+     * @param category
+     */
+    void update(Category category);
 }

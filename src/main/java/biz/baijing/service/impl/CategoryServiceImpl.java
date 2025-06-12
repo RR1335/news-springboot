@@ -2,8 +2,10 @@ package biz.baijing.service.impl;
 
 import biz.baijing.mapper.CategoryMapper;
 import biz.baijing.pojo.Category;
+import biz.baijing.pojo.Result;
 import biz.baijing.service.CategoryService;
 import biz.baijing.utils.ThreadLocalUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
@@ -60,5 +63,23 @@ public class CategoryServiceImpl implements CategoryService {
 
         return categoryMapper.findById(categoryId,loginUserId);
 
+    }
+
+    @Override
+    public void update(Category category) {
+        category.setUpdateTime(LocalDateTime.now());
+
+        Map<String,Object> map = ThreadLocalUtil.get();
+        Integer loginUserId = (Integer) map.get("id");
+
+        Integer createUserId = category.getCreateUser();
+
+        log.info("创建用户ID {} 和 当前用户 ID {} ", createUserId,loginUserId);
+
+/*        if (loginUserId != createUserId ) {
+            throw new RuntimeException("修改用户和创建用户不一致，不可修改。");
+        }*/
+
+        categoryMapper.update(category);
     }
 }
