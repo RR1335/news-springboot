@@ -28,4 +28,10 @@ public interface UserService {
      * @param avatarUrl
      */
     void updateAvatar(String avatarUrl);
+
+    /**
+     * 更新密码
+     * @param nowPwd
+     */
+    void updatePW(String nowPwd);
 }

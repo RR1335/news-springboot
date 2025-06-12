@@ -3,6 +3,7 @@ package biz.baijing.service.impl;
 import biz.baijing.mapper.UserMapper;
 import biz.baijing.pojo.User;
 import biz.baijing.service.UserService;
+import biz.baijing.utils.Md5Util;
 import biz.baijing.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,5 +55,17 @@ public class UserServiceImpl implements UserService {
         Integer id = (Integer) map.get("id");
         // updatetime 在 Mapper 中处理， now()
         userMapper.updateAvatar(id,avatarUrl);
+    }
+
+    /**
+     * 更新密码
+     * @param nowPwd
+     */
+    public void updatePW(String nowPwd) {
+        Map<String,Object> map = ThreadLocalUtil.get();
+        Integer id = (Integer) map.get("id");
+
+
+        userMapper.updatePwd(id,nowPwd);
     }
 }

@@ -7,15 +7,19 @@ import biz.baijing.service.UserService;
 import biz.baijing.utils.JwtUtil;
 import biz.baijing.utils.Md5Util;
 import biz.baijing.utils.ThreadLocalUtil;
+import io.micrometer.common.util.StringUtils;
 import jakarta.validation.constraints.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Update;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static biz.baijing.common.ErrorMessage.*;
 
 @RestController
 @RequestMapping("/user")
@@ -113,9 +117,56 @@ public class UserController {
      * @return
      */
     @PatchMapping("/updateAvatar")
-    public Result updateAvatar(@RequestParam("avatar") String avatarUrl) {
+    public Result updateAvatar(@RequestParam("avatar") @URL String avatarUrl) {
 
         userService.updateAvatar(avatarUrl);
+
+        return Result.success();
+    }
+
+    /**
+     * 修改密码
+     * @param params
+     * @return
+     */
+    @PatchMapping("/updatePwd")
+    public Result updatePW(@RequestBody Map<String, String> params) {
+        // 或者 表的数据
+        log.info("params:{}", params);
+
+        String oldPwd = params.get("old_pwd");
+        String newPwd = params.get("new_pwd");
+        String rePwd = params.get("re_pwd");
+
+
+        if (StringUtils.isBlank(oldPwd) || StringUtils.isBlank(newPwd) || StringUtils.isBlank(rePwd)) {
+            return  Result.error(PASSWORD_BLANK);
+        }
+
+        if (!newPwd.equals(rePwd)) {
+            return   Result.error(TWO_NEW_PASSWORD_NOT_EQUALS);
+        }
+
+        if (oldPwd.equals(newPwd)) {
+            return  Result.error(OLD_NEW_PASSWORD_EQUALS);
+        }
+
+        Map<String,Object> map = ThreadLocalUtil.get();
+        String username = (String) map.get("username");
+        User loginUser = userService.findByUsername(username);
+        String password = loginUser.getPassword();
+
+        String md5OldPwd = Md5Util.getMD5String(oldPwd);
+
+        log.info("就密码 和 数据库已存入密码:{},{}", md5OldPwd , password);
+
+        if (!md5OldPwd.equals(password)) {
+            return  Result.error(OLD_PASSWORD_ERROR);
+        }
+
+        String nowPwd = Md5Util.getMD5String(newPwd);
+
+        userService.updatePW(nowPwd);
 
         return Result.success();
     }
