@@ -7,17 +7,18 @@ import biz.baijing.service.UserService;
 import biz.baijing.utils.JwtUtil;
 import biz.baijing.utils.Md5Util;
 import jakarta.validation.constraints.Pattern;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
 @Validated
+@Slf4j
 public class UserController {
 
     @Autowired
@@ -70,6 +71,26 @@ public class UserController {
 
         // 密码错误
         return Result.error(ErrorMessage.LOGOIN_PASSWORD_ERROR);
+    }
+
+    /**
+     * 查询用户信息
+     * @param token
+     * @return
+     */
+    @GetMapping("/userInfo")
+    public Result<User> userInfo(@RequestHeader(name = "Authorization") String token) {
+        // 获取当前用户名 （或 id，存 token 的时候存了 id）
+        log.info("userInfo - 获取的token: {}",token);
+        Map<String, Object> map =  JwtUtil.parseToken(token);
+        String username = (String) map.get("username");
+
+/*        Map<String, Object> map = ThreadLocalUtil.get();
+        String username = (String) map.get("username");*/
+
+        User user = userService.findByUsername(username);
+
+        return Result.success(user);
     }
 
 }

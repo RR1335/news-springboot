@@ -19,13 +19,13 @@ public class ArticleController {
     @GetMapping("/list")
     public Result<String> list(@RequestHeader(name = "Authorization") String token, HttpServletResponse response) {
         // 从 请求头 获得token 数据
-        // 验证 token
-        try {
-            Map<String, Object> claims = JwtUtil.parseToken(token);
-        } catch (Exception e) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);      // int SC_UNAUTHORIZED = 401
-            return Result.error(ErrorMessage.UNLOGIN);
-        }
+//        // 验证 token
+//        try {
+//            Map<String, Object> claims = JwtUtil.parseToken(token);
+//        } catch (Exception e) {
+//            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);      // int SC_UNAUTHORIZED = 401
+//            return Result.error(ErrorMessage.UNLOGIN);
+//        }
 
         return Result.success("list");
     }
