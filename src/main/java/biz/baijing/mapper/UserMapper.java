@@ -22,7 +22,8 @@ public interface UserMapper {
      * @param username
      * @param password
      */
-    @Insert("insert into user(username, password, create_time, update_time) " +
-            "values (#{username},#{password},now(),now())")
+    // 默认 nickname 等于 username
+    @Insert("insert into user(username, password, nickname, create_time, update_time) " +
+            "values (#{username},#{password},#{username},now(),now())")
     void add(String username, String password);
 }

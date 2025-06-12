@@ -6,6 +6,7 @@ import biz.baijing.pojo.User;
 import biz.baijing.service.UserService;
 import biz.baijing.utils.JwtUtil;
 import biz.baijing.utils.Md5Util;
+import biz.baijing.utils.ThreadLocalUtil;
 import jakarta.validation.constraints.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,18 +76,17 @@ public class UserController {
 
     /**
      * 查询用户信息
-     * @param token
      * @return
      */
     @GetMapping("/userInfo")
-    public Result<User> userInfo(@RequestHeader(name = "Authorization") String token) {
+    public Result<User> userInfo(/*@RequestHeader(name = "Authorization") String token*/) {
         // 获取当前用户名 （或 id，存 token 的时候存了 id）
-        log.info("userInfo - 获取的token: {}",token);
-        Map<String, Object> map =  JwtUtil.parseToken(token);
-        String username = (String) map.get("username");
-
-/*        Map<String, Object> map = ThreadLocalUtil.get();
+//        log.info("userInfo - 获取的token: {}",token);
+/*        Map<String, Object> map =  JwtUtil.parseToken(token);
         String username = (String) map.get("username");*/
+
+        Map<String, Object> map = ThreadLocalUtil.get();
+        String username = (String) map.get("username");
 
         User user = userService.findByUsername(username);
 

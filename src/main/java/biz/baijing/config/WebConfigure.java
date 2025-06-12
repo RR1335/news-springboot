@@ -16,7 +16,7 @@ public class WebConfigure implements WebMvcConfigurer {
 
     public void addInterceptors(InterceptorRegistry registry) {
         log.info("webConfigeure 登录与否 {}", loginInterceptor);
-        registry.addInterceptor(loginInterceptor).excludePathPatterns("/user/login", "/user/logout");
+        registry.addInterceptor(loginInterceptor).excludePathPatterns("/user/login", "/user/register");
     }
 
 
