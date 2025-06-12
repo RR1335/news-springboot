@@ -107,4 +107,16 @@ public class UserController {
         return Result.success();
     }
 
+    /**
+     * 更新头像
+     * @param avatarUrl
+     * @return
+     */
+    @PatchMapping("/updateAvatar")
+    public Result updateAvatar(@RequestParam("avatar") String avatarUrl) {
+
+        userService.updateAvatar(avatarUrl);
+
+        return Result.success();
+    }
 }
