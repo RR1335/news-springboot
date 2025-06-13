@@ -4,6 +4,8 @@ import biz.baijing.pojo.Article;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface ArticleMapper {
 
@@ -16,7 +18,13 @@ public interface ArticleMapper {
     void add(Article article);
 
 
-
-
+    /**
+     * 分页查询
+     * @param userId
+     * @param categoryId
+     * @param state
+     * @return
+     */
+    List<Article> list(Integer userId, Integer categoryId, String state);
 }
 
