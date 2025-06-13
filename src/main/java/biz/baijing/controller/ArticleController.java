@@ -1,32 +1,36 @@
 package biz.baijing.controller;
 
-
-import biz.baijing.common.ErrorMessage;
+import biz.baijing.pojo.Article;
 import biz.baijing.pojo.Result;
-import biz.baijing.utils.JwtUtil;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
+import biz.baijing.service.ArticleService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-
 @RestController
 @RequestMapping("/article")
+@Validated
+@Slf4j
 public class ArticleController {
 
-    @GetMapping("/list")
-    public Result<String> list(@RequestHeader(name = "Authorization") String token, HttpServletResponse response) {
-        // 从 请求头 获得token 数据
-//        // 验证 token
-//        try {
-//            Map<String, Object> claims = JwtUtil.parseToken(token);
-//        } catch (Exception e) {
-//            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);      // int SC_UNAUTHORIZED = 401
-//            return Result.error(ErrorMessage.UNLOGIN);
-//        }
+    @Autowired
+    private ArticleService articleService;
 
-        return Result.success("list");
+    /**
+     * 添加文章
+     * @param article
+     * @return
+     */
+    @PostMapping
+    public Result add(@RequestBody @Validated Article article) {
+
+        articleService.add(article);
+
+        return Result.success();
     }
+
 }
