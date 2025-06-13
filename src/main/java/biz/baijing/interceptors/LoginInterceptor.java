@@ -5,6 +5,9 @@ import biz.baijing.utils.ThreadLocalUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -13,6 +16,9 @@ import java.util.Map;
 @Component
 @Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     /**
      *
@@ -28,6 +34,14 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         // 验证 token
         try {
+            log.info("拦截器获取 token {}", token);
+            ValueOperations<String, String> sValueOps = stringRedisTemplate.opsForValue();
+            String redisToken = sValueOps.get(token);
+            log.info("redis 修改密码中获取 {}" ,redisToken);
+            if (redisToken == null) {
+                throw new RuntimeException();
+            }
+
             Map<String, Object> claims = JwtUtil.parseToken(token);
             // 当前线程设置 user 数据 —— id and username
             ThreadLocalUtil.set(claims);
