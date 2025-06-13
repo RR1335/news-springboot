@@ -1,6 +1,9 @@
 package biz.baijing.mapper;
 
 import biz.baijing.pojo.Category;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -43,4 +46,20 @@ public interface CategoryMapper {
     @Update("update category set  category_name = #{categoryName} , category_alias = #{categoryAlias}, update_time = #{updateTime} " +
             "where id = #{id} ")
     void update(Category category);
+
+    /**
+     * 根据分类名字查询分类
+     * @param categoryName
+     * @return
+     */
+    @Select("select * from category where category_name = #{categoryName}")
+    Category findByName(@NotEmpty @Pattern(regexp = "^\\S{3,10}$") String categoryName);
+
+    /**
+     * 通过id查询分类
+     * @param id
+     * @return
+     */
+    @Select("select * from category where id = #{id}")
+    Category getById(@NotNull(groups = Update.class) Integer id);
 }

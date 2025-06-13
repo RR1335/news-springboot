@@ -1,10 +1,10 @@
 package biz.baijing.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.groups.Default;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,10 +18,11 @@ import java.time.LocalDateTime;
 public class Category {
     @NotNull(groups = Update.class)
     private Integer id;//主键ID
-    @NotEmpty(groups = {Add.class,Update.class})
+    @NotEmpty
     @Pattern(regexp = "^\\S{3,10}$")
     private String categoryName;//分类名称
-    @NotEmpty(groups = {Add.class,Update.class})
+//    @NotEmpty(groups = {Add.class,Update.class})
+    @NotEmpty
     @Pattern(regexp = "^\\S{3,10}$")
     private String categoryAlias;//分类别名
     private Integer createUser;//创建人ID
@@ -35,11 +36,11 @@ public class Category {
     // 分组继承， A extends B
 
     // 定义 groups 分组
-    public interface Add{
+    public interface Add extends Default {
 
     }
 
-    public interface Update {
+    public interface Update extends Default {
 
     }
 }

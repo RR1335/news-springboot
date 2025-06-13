@@ -25,6 +25,12 @@ public class CategoryServiceImpl implements CategoryService {
      * @param category
      */
     public void add(Category category) {
+
+        Category cg = categoryMapper.findByName(category.getCategoryName());
+        if (cg != null) {
+            throw new RuntimeException("分类已存在，请重新输入。");
+        }
+
         // 创建人 ID ， 更新时间
         category.setCreateTime(LocalDateTime.now());
         category.setUpdateTime(LocalDateTime.now());
@@ -67,18 +73,26 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void update(Category category) {
-        category.setUpdateTime(LocalDateTime.now());
 
         Map<String,Object> map = ThreadLocalUtil.get();
         Integer loginUserId = (Integer) map.get("id");
 
-        Integer createUserId = category.getCreateUser();
+        Category cg = categoryMapper.getById(category.getId());
 
-        log.info("创建用户ID {} 和 当前用户 ID {} ", createUserId,loginUserId);
+        log.info("<UNK>{}", cg);
+        if (category.getCategoryName().equals(cg.getCategoryName())) {
+            throw new RuntimeException("分类名已存在，请重新输入。");
+        }
 
-/*        if (loginUserId != createUserId ) {
-            throw new RuntimeException("修改用户和创建用户不一致，不可修改。");
-        }*/
+        if (category.getCategoryAlias().equals(cg.getCategoryAlias())) {
+            throw new RuntimeException("分类别名(alias)已存在，请重新输入。");
+        }
+
+        if (loginUserId != cg.getCreateUser()) {
+            throw new RuntimeException("分类非当前用户创建，无法修改。");
+        }
+
+        category.setUpdateTime(LocalDateTime.now());
 
         categoryMapper.update(category);
     }
