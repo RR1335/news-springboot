@@ -28,7 +28,7 @@ public class Article {
     @NotEmpty
     @URL
     private String coverImg;//封面图像
-    @State
+    @State   // 自定义校验规则
     private String state;//发布状态 已发布|草稿
     @NotNull
     private Integer categoryId;//文章分类id
