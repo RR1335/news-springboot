@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import static biz.baijing.common.NotionMessage.*;
+
 /**
  * 统一响应结果
  * @param <T>
@@ -18,15 +20,15 @@ public class Result<T> {
 
     //快速返回操作成功响应结果(带响应数据)
     public static <E> Result<E> success(E data) {
-        return new Result<>(0, "操作成功", data);
+        return new Result<>(RESULT_SUCCESS, RESULT_STATUS, data);
     }
 
     //快速返回操作成功响应结果
     public static Result success() {
-        return new Result(0, "操作成功", null);
+        return new Result(RESULT_SUCCESS, RESULT_STATUS, null);
     }
 
     public static Result error(String message) {
-        return new Result(1, message, null);
+        return new Result(RESULT_ERROR, message, null);
     }
 }

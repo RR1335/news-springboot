@@ -24,11 +24,11 @@ public interface CategoryMapper {
 
     /**
      * 查询分类列表根据用户Id
-     * @param userId
+     * @param
      * @return
      */
-    @Select("select * from category where create_user = #{userId}")
-    List<Category> listById(Integer userId);
+    @Select("select * from category ")
+    List<Category> listById();
 
     /**
      * 根据Id查询详情，登录用户创建的

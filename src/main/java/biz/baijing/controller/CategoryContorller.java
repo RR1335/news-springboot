@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static biz.baijing.common.ErrorMessage.CATEGORYNAME_NOT_EMPTY_ERROR;
+
 @RestController
 @Validated
 @RequestMapping("/category")

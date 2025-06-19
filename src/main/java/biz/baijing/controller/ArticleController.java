@@ -4,7 +4,6 @@ import biz.baijing.pojo.Article;
 import biz.baijing.pojo.PageBean;
 import biz.baijing.pojo.Result;
 import biz.baijing.service.ArticleService;
-import jakarta.validation.constraints.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;

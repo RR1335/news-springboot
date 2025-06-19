@@ -2,13 +2,14 @@ package biz.baijing.anno;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import validation.StateValidation;
+import biz.baijing.validation.StateValidation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import static biz.baijing.common.ValidationErrorMessage.STATE_VALIDATION_ERROR;
+
+import static biz.baijing.common.NotionMessage.STATE_VALIDATION_ERROR;
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 

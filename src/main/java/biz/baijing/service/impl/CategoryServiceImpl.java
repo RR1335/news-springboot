@@ -2,7 +2,6 @@ package biz.baijing.service.impl;
 
 import biz.baijing.mapper.CategoryMapper;
 import biz.baijing.pojo.Category;
-import biz.baijing.pojo.Result;
 import biz.baijing.service.CategoryService;
 import biz.baijing.utils.ThreadLocalUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -52,10 +51,11 @@ public class CategoryServiceImpl implements CategoryService {
      * @return
      */
     public List<Category> listById() {
-        Map<String,Object> map = ThreadLocalUtil.get();
-        Integer loginUserId = (Integer) map.get("id");
+//        Map<String,Object> map = ThreadLocalUtil.get();
+//        Integer loginUserId = (Integer) map.get("id");
 
-        return categoryMapper.listById(loginUserId);
+//        return categoryMapper.listById(loginUserId);
+        return categoryMapper.listById();
     }
 
     /**

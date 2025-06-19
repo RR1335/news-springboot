@@ -1,53 +1,17 @@
-# 公共属性 或 指定环境
 spring:
-  profiles:
-    active: dev
-server:
-  servlet:
-    context-path: /news
----
-# 开发环境
-spring:
-  config:
-    activate:
-      on-profile: dev
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/news
+    url: jdbc:mysql://localhost:3306/big_event
     username: root
-    password: 123000
+    password: 12357896
   data:
     redis:
       host: localhost
       port: 6379
 
-server:
-  port: 8080
-
 mybatis:
   configuration:
-    map-underscore-to-camel-case: true
-
-# 「---」 分割不同的环境
----
-
-# 测试环境
-spring:
-  config:
-    activate:
-      on-profile: test
-
+    map-underscore-to-camel-case: true #开启驼峰命名和下划线命名的自动转换
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 server:
-  port: 8085
-
-# 「---」 分割不同的环境
----
-
-# 生产环境
-spring:
-  config:
-    activate:
-      on-profile: runtime
-
-server:
-  port: 9079
+  port: 8080

@@ -23,9 +23,8 @@ public class User {
     @JsonIgnore   // 忽略被 注解的字段，在转换 json 的时候
     private String password;//密码
     @NotEmpty
-    @Pattern(regexp = "^\\S{1,10}$")
+    @Pattern(regexp = "^\\S{3,10}$")
     private String nickname;//昵称
-    @NotEmpty
     @Email
     private String email;//邮箱
     private String userPic;//用户头像地址

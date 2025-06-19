@@ -42,7 +42,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/register")
-    public Result register(@Pattern(regexp = "^\\S{5,16}$") String username,@Pattern(regexp = "^\\S{5,16}$") String password) {
+    public Result register(@Pattern(regexp = "^\\S{3,10}$") String username,@Pattern(regexp = "^\\S{3,10}$") String password) {
         // 确定用户是否存在
         User user = userService.findByUsername(username);
         if (user != null) {
@@ -62,7 +62,7 @@ public class UserController {
      * @return                // String jwt的字符串
      */
     @PostMapping("/login")
-    public Result<String> login(@Pattern(regexp = "^\\S{5,16}$") String username,@Pattern(regexp = "^\\S{5,16}$") String password) {
+    public Result<String> login(@Pattern(regexp = "^\\S{3,10}$") String username,@Pattern(regexp = "^\\S{3,10}$") String password) {
         User loginUser = userService.findByUsername(username);
         // 用户不存在，直接返回一个错误
         if (loginUser == null) {
@@ -113,7 +113,7 @@ public class UserController {
      */
     @PutMapping("/update")
     public Result update(@RequestBody @Validated User user) {
-
+        log.info("用户数据 {}", user);
         userService.update(user);
 
         return Result.success();
@@ -142,6 +142,8 @@ public class UserController {
         // 或者 表的数据
         log.info("params:{}", params);
         log.info("修改密码 Controller - token:{}", token);
+
+        System.out.println(params.get("new_pwd"));
 
         String oldPwd = params.get("old_pwd");
         String newPwd = params.get("new_pwd");
